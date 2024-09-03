@@ -51,11 +51,13 @@ const BillingDetails = () => (
         </tr>
         <tr>
           <td>
-            <label htmlFor="cvv" className="field-label cvv-label">
-              <span className="asterisk">*</span>
-              CVV:
-            </label>
-            <img className="help-icon" src={helpIconImage} alt="Help Icon" />
+            <div className="cvv-label-wrapper">
+              <label htmlFor="cvv" className="field-label cvv-label">
+                <span className="asterisk">*</span>
+                CVV:
+              </label>
+              <img className="help-icon" src={helpIconImage} alt="Help Icon" />
+            </div>
           </td>
           <td>
             <input type="text" id="cvv" className="cvv-value" />
