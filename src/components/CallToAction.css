@@ -84,6 +84,11 @@
   }
 }
 
+.reserve-table-button:hover {
+  cursor: pointer;
+  background-color: #f1f0f0;
+}
+
 .call-to-action-section-right-column {
   display: flex;
   flex-flow: column wrap;

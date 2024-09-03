@@ -1,5 +1,6 @@
 import footerImage from "../images/restaurantfood.jpg";
 import "./Footer.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => (
   <footer>
@@ -11,22 +12,22 @@ const Footer = () => (
         <h3 className="footer-heading">Browse</h3>
         <ul>
           <li>
-            <a href="index.html">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <a href="#">About</a>
+            <Link to="#">About</Link>
           </li>
           <li>
-            <a href="#">Menu</a>
+            <Link to="#">Menu</Link>
           </li>
           <li>
-            <a href="#">Reservations</a>
+            <Link to="/booking">Reservations</Link>
           </li>
           <li>
-            <a href="#">Order Online</a>
+            <Link to="#">Order Online</Link>
           </li>
           <li>
-            <a href="#">Login</a>
+            <Link to="#">Login</Link>
           </li>
         </ul>
       </div>
@@ -34,13 +35,13 @@ const Footer = () => (
         <h3 className="footer-heading">Contact</h3>
         <ul>
           <li>
-            <a href="index.html">Address</a>
+            <Link to="#">Address</Link>
           </li>
           <li>
-            <a href="#">Phone Number</a>
+            <Link to="#">Phone Number</Link>
           </li>
           <li>
-            <a href="#">Email</a>
+            <Link to="#">Email</Link>
           </li>
         </ul>
       </div>
@@ -48,16 +49,16 @@ const Footer = () => (
         <h3 className="footer-heading">Social Media Links</h3>
         <ul>
           <li>
-            <a href="index.html">LinkedIn</a>
+            <Link to="http://www.linkedin.com">LinkedIn</Link>
           </li>
           <li>
-            <a href="#">Facebook</a>
+            <Link to="http://www.facebook.com">Facebook</Link>
           </li>
           <li>
-            <a href="#">X</a>
+            <Link to="http://www.x.com">X</Link>
           </li>
           <li>
-            <a href="#">Pinterest</a>
+            <Link to="http://www.pinterest.com">Pinterest</Link>
           </li>
         </ul>
       </div>

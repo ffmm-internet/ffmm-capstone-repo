@@ -1,5 +1,6 @@
 import restaurantFoodImage from "../images/restaurantfood.jpg";
 import "./CallToAction.css";
+import { Link } from "react-router-dom";
 
 const CallToAction = () => (
   <section className="call-to-action-section">
@@ -13,7 +14,11 @@ const CallToAction = () => (
         </p>
       </div>
       <div>
-        <button className="reserve-table-button">Reserve a Table</button>
+        <Link to="/booking">
+          <button className="reserve-table-button" type="button">
+            Reserve a Table
+          </button>
+        </Link>
       </div>
     </div>
     <div className="call-to-action-section-right-column">
