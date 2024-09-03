@@ -4,7 +4,7 @@ import logo from "../images/Logo.svg";
 function Header() {
   return (
     <header>
-      <img src={logo} alt="logo" />
+      <img src={logo} alt="Little Lemon Logo" />
       <Nav />
     </header>
   );
