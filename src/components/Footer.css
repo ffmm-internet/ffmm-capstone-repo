@@ -1,0 +1,133 @@
+footer {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-row: 3;
+  grid-column: 1 / 12;
+  background-color: #495e57;
+  margin-top: 10px;
+}
+
+@media (min-width: 440px) {
+  footer {
+    margin-top: 25px;
+  }
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 2 / 11;
+  padding-top: 15px;
+  grid-row: 1;
+}
+
+@media (min-width: 440px) {
+  .footer-content {
+    padding-top: 25px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+.footer-content a {
+  text-decoration: none;
+  font-family: "Arial";
+  font-size: 11px;
+}
+
+@media (min-width: 440px) {
+  .footer-content a {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 992px) {
+  .footer-content a {
+    font-size: 20px;
+  }
+}
+
+.footer-first-column {
+  display: none;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 440px) {
+  .footer-first-column {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column: auto;
+  }
+
+  .footer-image {
+    width: 75%;
+    height: 100%;
+  }
+}
+
+.footer-second-column {
+  display: flex;
+  grid-column: 1 / 4;
+  grid-row: 1;
+  font-size: 11px;
+  flex-flow: column nowrap;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 440px) {
+  .footer-second-column {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .footer-second-column {
+    grid-column: auto;
+  }
+}
+
+.footer-heading {
+  padding-bottom: 20px;
+}
+
+.footer-third-column {
+  display: flex;
+  grid-column: 4 / 7;
+  grid-row: 1;
+  font-size: 11px;
+  flex-flow: column nowrap;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 440px) {
+  .footer-third-column {
+    grid-column: auto;
+  }
+}
+
+.footer-fourth-column {
+  display: flex;
+  grid-column: 7 / 10;
+  grid-row: 1;
+  font-size: 11px;
+  flex-flow: column nowrap;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 440px) {
+  .footer-fourth-column {
+    grid-column-end: 12;
+    grid-column: auto;
+  }
+}
+
+.footer-fourth-column .footer-heading {
+  padding-bottom: 5px;
+}
+
+@media (min-width: 440px) {
+  .footer-fourth-column .footer-heading {
+    padding-bottom: 20px;
+  }
+}

@@ -1,0 +1,29 @@
+table {
+  grid-column: 1 / 10;
+}
+
+td {
+  padding-bottom: 5px;
+}
+
+@media (min-width: 440px) {
+  td {
+    padding-bottom: 25px;
+  }
+}
+
+.field-label {
+  font-size: 11px;
+}
+
+@media (min-width: 440px) {
+  .field-label {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 992px) {
+  .field-label {
+    font-size: 36px;
+  }
+}

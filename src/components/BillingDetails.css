@@ -1,0 +1,123 @@
+.billing-details-section {
+  grid-row: 4;
+  grid-column: 1 / 12;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.billing-details-section-heading {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  grid-column: 2 / 11;
+  padding-top: 20px;
+  align-items: center;
+  grid-row: 1;
+}
+
+@media (min-width: 440px) {
+  .billing-details-section-heading {
+    padding-top: 40px;
+  }
+}
+
+@media (min-width: 992px) {
+  .billing-details-section-heading {
+    padding-top: 60px;
+  }
+}
+
+.billing-details-section-content {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 2 / 11;
+  padding-top: 15px;
+  grid-row: 2;
+}
+
+@media (min-width: 440px) {
+  .billing-details-section-content {
+    padding-top: 25px;
+    margin-bottom: 25px;
+  }
+}
+
+.credit-card-number-value {
+  width: 100%;
+}
+
+.expiration-date-value {
+  width: 50%;
+}
+
+.cvv-value {
+  width: 30%;
+}
+
+.zip-code-value {
+  width: 50%;
+}
+
+@media (min-width: 992px) {
+  .credit-card-number-value,
+  .expiration-date-value,
+  .cvv-value,
+  .zip-code-value {
+    line-height: 3;
+  }
+}
+
+.help-icon {
+  width: 15px;
+  height: 15px;
+  padding-left: 5px;
+  vertical-align: middle;
+}
+
+@media (min-width: 440px) {
+  .help-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+  }
+}
+
+@media (min-width: 992px) {
+  .help-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.reserve-now-button {
+  display: block;
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #f4ce14;
+  border: none;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 440px) {
+  .reserve-now-button {
+    width: 200px;
+    height: 45px;
+    border-radius: 15px;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 992px) {
+  .reserve-now-button {
+    width: 350px;
+    height: 80px;
+    border-radius: 30px;
+    font-size: 36px;
+    margin-top: 40px;
+  }
+}

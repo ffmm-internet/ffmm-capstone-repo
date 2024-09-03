@@ -1,4 +1,5 @@
 import footerImage from "../images/restaurantfood.jpg";
+import "./Footer.css";
 
 const Footer = () => (
   <footer>
