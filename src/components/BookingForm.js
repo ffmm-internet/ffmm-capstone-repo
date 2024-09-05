@@ -2,8 +2,13 @@ import "./BookingForm.css";
 import { useState } from "react";
 import BookingSlot from "./BookingSlot";
 
+const getTodayString = () => {
+  const [month, day, year] = new Date().toLocaleDateString("en-US").split("/");
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+};
+
 const BookingForm = (props) => {
-  const [bookingDate, setBookingDate] = useState("");
+  const [bookingDate, setBookingDate] = useState(getTodayString());
   const [bookingTime, setBookingTime] = useState("");
   const [bookingNumberOfGuests, setBookingNumberOfGuests] = useState("1");
   const [bookingOccasion, setBookingOccasion] = useState("Other");
@@ -30,7 +35,7 @@ const BookingForm = (props) => {
   };
 
   const clearForm = () => {
-    setBookingDate("");
+    setBookingDate(getTodayString());
     setBookingTime("");
     setBookingNumberOfGuests("1");
     setBookingOccasion("Other");
