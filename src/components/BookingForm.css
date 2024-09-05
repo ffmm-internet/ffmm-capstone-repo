@@ -1,0 +1,177 @@
+.booking-form-section {
+  grid-row: 2;
+  grid-column: 1 / 12;
+  display: grid;
+  grid-template-columns: subgrid;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.booking-form-section-heading {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  grid-column: 2 / 11;
+  padding-top: 20px;
+  align-items: center;
+  grid-row: 1;
+}
+
+@media (min-width: 440px) {
+  .booking-form-section-heading {
+    padding-top: 40px;
+  }
+}
+
+@media (min-width: 992px) {
+  .booking-form-section-heading {
+    padding-top: 60px;
+  }
+}
+
+.asterisk {
+  color: red;
+}
+
+.required-field-text {
+  font-weight: lighter;
+  margin-left: 5px;
+}
+
+.booking-form-section-content {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 2 / 11;
+  padding-top: 15px;
+  grid-row: 2;
+}
+
+@media (min-width: 440px) {
+  .booking-form-section-content {
+    padding-top: 25px;
+    margin-bottom: 25px;
+  }
+}
+
+form {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / 10;
+}
+
+.booking-date-value {
+  font-size: 11px;
+  width: 100%;
+}
+
+@media (min-width: 440px) {
+  .booking-date-value {
+    font-size: 18px;
+    width: 90%;
+  }
+}
+
+@media (min-width: 992px) {
+  .booking-date-value {
+    font-size: 36px;
+  }
+}
+
+.booking-time-value {
+  font-size: 11px;
+  width: 100%;
+}
+
+@media (min-width: 440px) {
+  .booking-time-value {
+    font-size: 18px;
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .booking-time-value {
+    font-size: 36px;
+  }
+}
+
+.booking-number-of-guests-value {
+  font-size: 11px;
+  width: 100%;
+}
+
+@media (min-width: 440px) {
+  .booking-number-of-guests-value {
+    font-size: 18px;
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .booking-number-of-guests-value {
+    font-size: 36px;
+  }
+}
+
+@media (min-width: 992px) {
+  .booking-date-value,
+  .booking-time-value,
+  .booking-number-of-guests-value,
+  .booking-occasion-value {
+    line-height: 1.5;
+  }
+}
+
+.booking-occasion-value {
+  font-size: 11px;
+  width: 100%;
+}
+
+@media (min-width: 440px) {
+  .booking-occasion-value {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 992px) {
+  .booking-occasion-value {
+    font-size: 36px;
+  }
+}
+
+.reserve-now-button {
+  display: block;
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: #f4ce14;
+  border: none;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 440px) {
+  .reserve-now-button {
+    width: 200px;
+    height: 45px;
+    border-radius: 15px;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 992px) {
+  .reserve-now-button {
+    width: 350px;
+    height: 80px;
+    border-radius: 30px;
+    font-size: 36px;
+    margin-top: 40px;
+  }
+}
+
+.reserve-now-button:hover {
+  cursor: pointer;
+  background-color: #f1f0f0;
+}

@@ -1,16 +1,12 @@
 import Hero from "./Hero";
-import ReservationDetails from "./ReservationDetails";
-import ContactDetails from "./ContactDetails";
-import BillingDetails from "./BillingDetails";
+import BookingForm from "./BookingForm";
 
 import "./BookingPage.css";
 
 const BookingPage = () => (
   <>
     <Hero />
-    <ReservationDetails />
-    <ContactDetails />
-    <BillingDetails />
+    <BookingForm />
   </>
 );
 
