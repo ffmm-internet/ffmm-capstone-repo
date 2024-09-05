@@ -1,17 +1,10 @@
 import "./BookingForm.css";
 import { useState } from "react";
+import BookingSlot from "./BookingSlot";
 
-const BookingForm = () => {
+const BookingForm = (props) => {
   const [bookingDate, setBookingDate] = useState("");
   const [bookingTime, setBookingTime] = useState("");
-  const [availableTimes, setAvailableTimes] = useState([
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-  ]);
   const [bookingNumberOfGuests, setBookingNumberOfGuests] = useState("1");
   const [bookingOccasion, setBookingOccasion] = useState("Other");
 
@@ -27,6 +20,12 @@ const BookingForm = () => {
         " " +
         bookingOccasion
     ); // todo ffm remove
+    props.onAdd({
+      bookingDate,
+      bookingTime,
+      bookingNumberOfGuests,
+      bookingOccasion,
+    });
     clearForm();
   };
 
@@ -72,7 +71,10 @@ const BookingForm = () => {
                     id="booking-date"
                     className="booking-date-value"
                     value={bookingDate}
-                    onChange={(e) => setBookingDate(e.target.value)}
+                    onChange={(e) => {
+                      setBookingDate(e.target.value);
+                      props.dispatch({ type: e.target.value });
+                    }}
                   />
                 </td>
               </tr>
@@ -93,10 +95,8 @@ const BookingForm = () => {
                     value={bookingTime}
                     onChange={(e) => setBookingTime(e.target.value)}
                   >
-                    {availableTimes.map((time) => (
-                      <option key={time} value={time}>
-                        {time}
-                      </option>
+                    {props.availableTimes.map((time) => (
+                      <BookingSlot key={time} time={time} />
                     ))}
                   </select>
                 </td>

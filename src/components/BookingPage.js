@@ -3,10 +3,10 @@ import BookingForm from "./BookingForm";
 
 import "./BookingPage.css";
 
-const BookingPage = () => (
+const BookingPage = (props) => (
   <>
     <Hero />
-    <BookingForm />
+    <BookingForm {...props} />
   </>
 );
 
