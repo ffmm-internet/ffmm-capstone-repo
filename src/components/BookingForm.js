@@ -95,9 +95,10 @@ const BookingForm = (props) => {
                     value={bookingTime}
                     onChange={(e) => setBookingTime(e.target.value)}
                   >
-                    {props.availableTimes.map((time) => (
-                      <BookingSlot key={time} time={time} />
-                    ))}
+                    {!!props.availableTimes &&
+                      props.availableTimes.map((time) => (
+                        <BookingSlot key={time} time={time} />
+                      ))}
                   </select>
                 </td>
               </tr>

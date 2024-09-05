@@ -2,19 +2,9 @@ import { useReducer, useState } from "react";
 import BookingPage from "./BookingPage";
 import Homepage from "./Homepage";
 import { Routes, Route } from "react-router-dom";
+import { updateTimes, initializeTimes } from "./reducerMethods";
 
 const Main = () => {
-  const initializeTimes = () => {
-    return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-  };
-
-  const updateTimes = (state, action) => {
-    const selectedDate = action.type;
-    // todo ffm remove
-    console.log("Dispatching " + selectedDate);
-    return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-  };
-
   const [availableTimes, dispatch] = useReducer(
     updateTimes,
     new Date(),
