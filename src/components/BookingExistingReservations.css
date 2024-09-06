@@ -1,0 +1,44 @@
+.booking-existing-reservations-section {
+  grid-row: 3;
+  grid-column: 1 / 12;
+  display: grid;
+  grid-template-columns: subgrid;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.booking-existing-reservations-section-heading {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  grid-column: 2 / 11;
+  padding-top: 20px;
+  align-items: center;
+  grid-row: 1;
+}
+
+@media (min-width: 440px) {
+  .booking-existing-reservations-section-heading {
+    padding-top: 40px;
+  }
+}
+
+@media (min-width: 992px) {
+  .booking-existing-reservations-section-heading {
+    padding-top: 60px;
+  }
+}
+
+.booking-existing-reservations-section-content {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 2 / 11;
+  padding-top: 15px;
+  grid-row: 2;
+}
+
+@media (min-width: 440px) {
+  .booking-existing-reservations-section-content {
+    padding-top: 25px;
+    margin-bottom: 25px;
+  }
+}

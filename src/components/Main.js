@@ -11,10 +11,24 @@ const Main = () => {
     initializeTimes
   );
 
-  const [bookings, updateAllBookings] = useState([]);
+  const bookingsFromStorage = localStorage.getItem("bookings");
+  const bookingsData = bookingsFromStorage
+    ? JSON.parse(bookingsFromStorage)
+    : [];
+
+  const [bookings, updateAllBookings] = useState(bookingsData);
 
   const onAdd = (newBooking) => {
-    updateAllBookings([...bookings, newBooking]);
+    const bookingsFromStorage = localStorage.getItem("bookings");
+    if (bookingsFromStorage) {
+      const oldBookings = JSON.parse(bookingsFromStorage);
+      const newBookings = [...oldBookings, newBooking];
+      localStorage.setItem("bookings", JSON.stringify(newBookings));
+    } else {
+      localStorage.setItem("bookings", JSON.stringify([newBooking]));
+    }
+
+    updateAllBookings(JSON.parse(localStorage.getItem("bookings")));
   };
 
   return (
@@ -28,6 +42,7 @@ const Main = () => {
               availableTimes={availableTimes}
               dispatch={dispatch}
               onAdd={onAdd}
+              bookings={bookings}
             />
           }
         />
