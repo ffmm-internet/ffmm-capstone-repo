@@ -10,14 +10,16 @@ describe("BookingForm", () => {
   });
 
   test("Allows the user to submit BookingForm and dispatches date", () => {
-    const onAdd = jest.fn();
+    const submitForm = jest.fn();
     const dispatch = jest.fn();
+    const navigateToConfirmationPage = jest.fn();
 
     render(
       <BookingForm
-        onAdd={onAdd}
+        submitForm={submitForm}
         dispatch={dispatch}
         availableTimes={["17:00", "18:00", "19:00"]}
+        navigateToConfirmationPage={navigateToConfirmationPage}
       />
     );
 
@@ -33,7 +35,7 @@ describe("BookingForm", () => {
     fireEvent.change(occasionInput, { target: { value: "Birthday" } });
     fireEvent.click(submitButton);
 
-    expect(onAdd).toHaveBeenCalledTimes(1);
+    expect(submitForm).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: "2024-09-04",
     });
@@ -42,14 +44,22 @@ describe("BookingForm", () => {
 
 describe("reducerMethods", () => {
   test("updateTimes", () => {
-    const expected = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-    const result = updateTimes(new Date(), "2024-09-04");
+    const expected = [
+      "17:00",
+      "17:30",
+      "18:00",
+      "18:30",
+      "20:00",
+      "22:00",
+      "22:30",
+    ];
+    const result = updateTimes(null, { type: "2024-09-05" });
     expect(result).toEqual(expected);
   });
 
   test("initializeTimes", () => {
-    const expected = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-    const result = initializeTimes(new Date());
+    const expected = ["17:00", "17:30", "20:30", "22:30"];
+    const result = initializeTimes("2024-09-15");
     expect(result).toEqual(expected);
   });
 });
