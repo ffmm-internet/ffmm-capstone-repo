@@ -1,0 +1,29 @@
+.confirmed-booking-section {
+  grid-row: 3;
+  grid-column: 1 / 12;
+  display: grid;
+  grid-template-columns: subgrid;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.confirmed-booking-section-heading {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  grid-column: 2 / 11;
+  padding-top: 20px;
+  align-items: center;
+  grid-row: 1;
+}
+
+@media (min-width: 440px) {
+  .confirmed-booking-section-heading {
+    padding-top: 40px;
+  }
+}
+
+@media (min-width: 992px) {
+  .confirmed-booking-section-heading {
+    padding-top: 60px;
+  }
+}

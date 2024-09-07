@@ -9,7 +9,7 @@ const getTodayString = () => {
 
 const BookingForm = (props) => {
   const [bookingDate, setBookingDate] = useState(getTodayString());
-  const [bookingTime, setBookingTime] = useState("");
+  const [bookingTime, setBookingTime] = useState("Select Time");
   const [bookingNumberOfGuests, setBookingNumberOfGuests] = useState("1");
   const [bookingOccasion, setBookingOccasion] = useState("Other");
 
@@ -25,7 +25,7 @@ const BookingForm = (props) => {
         " " +
         bookingOccasion
     ); // todo ffm remove
-    props.onAdd({
+    props.submitForm({
       bookingDate,
       bookingTime,
       bookingNumberOfGuests,
@@ -35,8 +35,11 @@ const BookingForm = (props) => {
   };
 
   const clearForm = () => {
-    setBookingDate(getTodayString());
-    setBookingTime("");
+    const todayString = getTodayString();
+    props.dispatch({ type: todayString });
+
+    setBookingDate(todayString);
+    setBookingTime("Select Time");
     setBookingNumberOfGuests("1");
     setBookingOccasion("Other");
   };
@@ -53,7 +56,12 @@ const BookingForm = (props) => {
         </div>
       </div>
       <div className="booking-form-section-content">
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+            props.navigateToConfirmationPage("/booking-confirmed");
+          }}
+        >
           <table width="100%">
             <colgroup>
               <col width="50%" />
@@ -100,6 +108,7 @@ const BookingForm = (props) => {
                     value={bookingTime}
                     onChange={(e) => setBookingTime(e.target.value)}
                   >
+                    <option value="Select Time">Select Time</option>
                     {!!props.availableTimes &&
                       props.availableTimes.map((time) => (
                         <BookingSlot key={time} time={time} />
@@ -169,3 +178,4 @@ const BookingForm = (props) => {
 };
 
 export default BookingForm;
+export { getTodayString };

@@ -1,12 +1,30 @@
-const initializeTimes = (selectedDate) => fetchAPI(selectedDate);
+const initializeTimes = (selectedDate) => {
+  return updateTimes(null, { type: selectedDate });
+};
 
-const updateTimes = (state, action) => {
+const updateTimes = (_state, action) => {
   const selectedDate = action.type;
+
   // todo ffm remove
-  console.log("Dispatching " + selectedDate);
+  console.log("Dispatching: " + selectedDate);
 
   const dateObjNormalized = selectedDate + "T00:00"; // otherwise, will be treated as UTC
-  return fetchAPI(new Date(dateObjNormalized));
+
+  const availableTimes = fetchAPI(new Date(dateObjNormalized));
+  const bookingsFromStorage = localStorage.getItem("bookings");
+  const bookingsData = bookingsFromStorage
+    ? JSON.parse(bookingsFromStorage)
+    : [];
+
+  const filteredAvailableTimes = availableTimes.filter(
+    (time) =>
+      !bookingsData.some(
+        (booking) =>
+          booking.bookingDate === selectedDate && booking.bookingTime === time
+      )
+  );
+
+  return filteredAvailableTimes;
 };
 
 const seededRandom = function (seed) {
@@ -32,8 +50,8 @@ const fetchAPI = function (date) {
   }
   return result;
 };
-const submitAPI = function (formData) {
+const submitAPI = function (_formData) {
   return true;
 };
 
-export { initializeTimes, updateTimes };
+export { initializeTimes, updateTimes, submitAPI };
