@@ -18,9 +18,9 @@ const Main = () => {
   const bookingsFromStorage = localStorage.getItem("bookings");
   const bookingsData = bookingsFromStorage
     ? JSON.parse(bookingsFromStorage).sort((a, b) => {
-        const bookingDateA = new Date(a.bookingDate);
-        const bookingDateB = new Date(b.bookingDate);
-        return bookingDateA - bookingDateB;
+        const bookingDateTimeA = new Date(`${a.bookingDate}T${a.bookingTime}`);
+        const bookingDateTimeB = new Date(`${b.bookingDate}T${b.bookingTime}`);
+        return bookingDateTimeA - bookingDateTimeB;
       })
     : [];
 
@@ -39,9 +39,13 @@ const Main = () => {
 
       updateAllBookings(
         JSON.parse(localStorage.getItem("bookings")).sort((a, b) => {
-          const bookingDateA = new Date(a.bookingDate);
-          const bookingDateB = new Date(b.bookingDate);
-          return bookingDateA - bookingDateB;
+          const bookingDateTimeA = new Date(
+            `${a.bookingDate}T${a.bookingTime}`
+          );
+          const bookingDateTimeB = new Date(
+            `${b.bookingDate}T${b.bookingTime}`
+          );
+          return bookingDateTimeA - bookingDateTimeB;
         })
       );
     }

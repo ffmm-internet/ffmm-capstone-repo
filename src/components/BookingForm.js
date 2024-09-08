@@ -15,16 +15,6 @@ const BookingForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      "Booking reserved!" +
-        bookingDate +
-        " " +
-        bookingTime +
-        " " +
-        bookingNumberOfGuests +
-        " " +
-        bookingOccasion
-    ); // todo ffm remove
     props.submitForm({
       bookingDate,
       bookingTime,
@@ -84,6 +74,7 @@ const BookingForm = (props) => {
                     id="booking-date"
                     className="booking-date-value"
                     value={bookingDate}
+                    min={getTodayString()}
                     onChange={(e) => {
                       setBookingDate(e.target.value);
                       props.dispatch({ type: e.target.value });

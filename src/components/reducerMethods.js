@@ -5,9 +5,6 @@ const initializeTimes = (selectedDate) => {
 const updateTimes = (_state, action) => {
   const selectedDate = action.type;
 
-  // todo ffm remove
-  console.log("Dispatching: " + selectedDate);
-
   const dateObjNormalized = selectedDate + "T00:00"; // otherwise, will be treated as UTC
 
   const availableTimes = fetchAPI(new Date(dateObjNormalized));
