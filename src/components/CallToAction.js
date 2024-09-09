@@ -15,7 +15,11 @@ const CallToAction = () => (
       </div>
       <div>
         <Link to="/booking">
-          <button className="reserve-table-button" type="button">
+          <button
+            className="reserve-table-button"
+            type="button"
+            aria-label="On Click"
+          >
             Reserve a Table
           </button>
         </Link>

@@ -12,22 +12,34 @@ const Footer = () => (
         <h3 className="footer-heading">Browse</h3>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" aria-label="On Click">
+              Home
+            </Link>
           </li>
           <li>
-            <Link to="#">About</Link>
+            <Link to="#" aria-label="On Click">
+              About
+            </Link>
           </li>
           <li>
-            <Link to="#">Menu</Link>
+            <Link to="#" aria-label="On Click">
+              Menu
+            </Link>
           </li>
           <li>
-            <Link to="/booking">Reservations</Link>
+            <Link to="/booking" aria-label="On Click">
+              Reservations
+            </Link>
           </li>
           <li>
-            <Link to="#">Order Online</Link>
+            <Link to="#" aria-label="On Click">
+              Order Online
+            </Link>
           </li>
           <li>
-            <Link to="#">Login</Link>
+            <Link to="#" aria-label="On Click">
+              Login
+            </Link>
           </li>
         </ul>
       </div>
@@ -35,13 +47,19 @@ const Footer = () => (
         <h3 className="footer-heading">Contact</h3>
         <ul>
           <li>
-            <Link to="#">Address</Link>
+            <Link to="#" aria-label="On Click">
+              Address
+            </Link>
           </li>
           <li>
-            <Link to="#">Phone Number</Link>
+            <Link to="#" aria-label="On Click">
+              Phone Number
+            </Link>
           </li>
           <li>
-            <Link to="#">Email</Link>
+            <Link to="#" aria-label="On Click">
+              Email
+            </Link>
           </li>
         </ul>
       </div>
@@ -49,16 +67,24 @@ const Footer = () => (
         <h3 className="footer-heading">Social Media Links</h3>
         <ul>
           <li>
-            <Link to="http://www.linkedin.com">LinkedIn</Link>
+            <Link to="http://www.linkedin.com" aria-label="On Click">
+              LinkedIn
+            </Link>
           </li>
           <li>
-            <Link to="http://www.facebook.com">Facebook</Link>
+            <Link to="http://www.facebook.com" aria-label="On Click">
+              Facebook
+            </Link>
           </li>
           <li>
-            <Link to="http://www.x.com">X</Link>
+            <Link to="http://www.x.com" aria-label="On Click">
+              X
+            </Link>
           </li>
           <li>
-            <Link to="http://www.pinterest.com">Pinterest</Link>
+            <Link to="http://www.pinterest.com" aria-label="On Click">
+              Pinterest
+            </Link>
           </li>
         </ul>
       </div>

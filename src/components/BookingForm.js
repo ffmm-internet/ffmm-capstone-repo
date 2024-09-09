@@ -245,6 +245,7 @@ const BookingForm = (props) => {
                     className="reserve-now-button"
                     type="submit"
                     disabled={!isFormValid()}
+                    aria-label="On Click"
                   >
                     Reserve Now
                   </button>
