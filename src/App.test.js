@@ -160,3 +160,196 @@ describe("submitForm", () => {
     );
   });
 });
+
+describe("html5 attribute validation", () => {
+  test("date input should be required", () => {
+    render(<BookingForm />);
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    expect(dateInput).toBeRequired();
+  });
+
+  test("date input should be in the future", () => {
+    render(<BookingForm />);
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    expect(dateInput).toHaveAttribute(
+      "min",
+      new Date().toISOString().split("T")[0]
+    );
+  });
+
+  test("time input should be required", () => {
+    render(<BookingForm />);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    expect(timeInput).toBeRequired();
+  });
+
+  test("number of guests input should be required", () => {
+    render(<BookingForm />);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    expect(numberOfGuestsInput).toBeRequired();
+  });
+
+  test("number of guests input should be between 1 and 10", () => {
+    render(<BookingForm />);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    expect(numberOfGuestsInput).toHaveAttribute("min", "1");
+    expect(numberOfGuestsInput).toHaveAttribute("max", "10");
+  });
+
+  test("occasion input should be optional", () => {
+    render(<BookingForm />);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+    expect(occasionInput).not.toBeRequired();
+  });
+});
+
+describe("javascript form validation", () => {
+  let submitForm;
+  let dispatch;
+  let navigateToConfirmationPage;
+  const availableTimes = ["17:00", "17:30", "20:30", "22:30"]; // these times are valid for 2024-09-15
+
+  beforeEach(() => {
+    submitForm = jest.fn();
+    dispatch = jest.fn();
+    navigateToConfirmationPage = jest.fn();
+
+    // Set the date to 2024-09-15, i.e. as used in new Date()
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(new Date("2024-09-15T00:00:00"));
+
+    render(
+      <BookingForm
+        availableTimes={availableTimes}
+        submitForm={submitForm}
+        dispatch={dispatch}
+        navigateToConfirmationPage={navigateToConfirmationPage}
+      />
+    );
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.useRealTimers();
+  });
+
+  test("reserve now button is disabled when date is not selected", () => {
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+
+    fireEvent.change(dateInput, { target: { value: "" } }); // Note: no date selected yet
+    fireEvent.change(timeInput, { target: { value: "17:30" } }); // this time needs to be one that shows up in the availableTimes array
+    fireEvent.change(numberOfGuestsInput, { target: { value: "3" } });
+    fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
+
+    const submitButton = screen.getByText(/Reserve Now/);
+    expect(submitButton).toBeDisabled();
+  });
+
+  test("reserve now button is disabled when date is in the past", () => {
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+
+    fireEvent.change(dateInput, { target: { value: "2024-09-01" } }); // Note: current date is 2024-09-15, so this date is in the past
+    fireEvent.change(timeInput, { target: { value: "17:30" } }); // this time needs to be one that shows up in the availableTimes array
+    fireEvent.change(numberOfGuestsInput, { target: { value: "3" } });
+    fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
+
+    const submitButton = screen.getByText(/Reserve Now/);
+    expect(submitButton).toBeDisabled();
+  });
+
+  test("reserve now button is disabled when time is not selected", () => {
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+
+    fireEvent.change(dateInput, { target: { value: "2024-09-15" } });
+    fireEvent.change(timeInput, { target: { value: "" } }); // Note: no time selected yet
+    fireEvent.change(numberOfGuestsInput, { target: { value: "3" } });
+    fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
+
+    const submitButton = screen.getByText(/Reserve Now/);
+    expect(submitButton).toBeDisabled();
+  });
+
+  test("reserve now button is disabled when time selected is the default option", () => {
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+
+    fireEvent.change(dateInput, { target: { value: "2024-09-15" } });
+    fireEvent.change(timeInput, { target: { value: "Select Time" } }); // Note: this time is the default option in the UI
+    fireEvent.change(numberOfGuestsInput, { target: { value: "3" } });
+    fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
+
+    const submitButton = screen.getByText(/Reserve Now/);
+    expect(submitButton).toBeDisabled();
+  });
+
+  test("reserve now button is disabled when number of guests is not selected", () => {
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+
+    fireEvent.change(dateInput, { target: { value: "2024-09-15" } });
+    fireEvent.change(timeInput, { target: { value: "17:30" } }); // this time needs to be one that shows up in the availableTimes array
+    fireEvent.change(numberOfGuestsInput, { target: { value: "" } }); // Note: no number of guests selected yet
+    fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
+
+    const submitButton = screen.getByText(/Reserve Now/);
+    expect(submitButton).toBeDisabled();
+  });
+
+  test("reserve now button is disabled when number of guests is lower than the minimum valid range", () => {
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+
+    fireEvent.change(dateInput, { target: { value: "2024-09-15" } });
+    fireEvent.change(timeInput, { target: { value: "17:30" } }); // this time needs to be one that shows up in the availableTimes array
+    fireEvent.change(numberOfGuestsInput, { target: { value: "-4" } }); // Note: number of guests is negative
+    fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
+
+    const submitButton = screen.getByText(/Reserve Now/);
+    expect(submitButton).toBeDisabled();
+  });
+
+  test("reserve now button is disabled when number of guests is higher than the maximum valid range", () => {
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+
+    fireEvent.change(dateInput, { target: { value: "2024-09-15" } });
+    fireEvent.change(timeInput, { target: { value: "17:30" } }); // this time needs to be one that shows up in the availableTimes array
+    fireEvent.change(numberOfGuestsInput, { target: { value: "40" } }); // Note: number of guests is greater than 10
+    fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
+
+    const submitButton = screen.getByText(/Reserve Now/);
+    expect(submitButton).toBeDisabled();
+  });
+
+  test("reserve now button is enabled when all fields are valid", () => {
+    const dateInput = screen.getByLabelText(/Choose Date:/);
+    const timeInput = screen.getByLabelText(/Choose Time:/);
+    const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
+    const occasionInput = screen.getByLabelText(/Occasion/);
+
+    fireEvent.change(dateInput, { target: { value: "2024-09-15" } });
+    fireEvent.change(timeInput, { target: { value: "17:30" } }); // this time needs to be one that shows up in the availableTimes array
+    fireEvent.change(numberOfGuestsInput, { target: { value: "4" } });
+    fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
+
+    const submitButton = screen.getByText(/Reserve Now/);
+    expect(submitButton).toBeEnabled();
+  });
+});
