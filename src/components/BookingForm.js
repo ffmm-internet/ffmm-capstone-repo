@@ -1,6 +1,8 @@
 import "./BookingForm.css";
 import { useState } from "react";
 import BookingSlot from "./BookingSlot";
+import BookingExistingReservations from "./BookingExistingReservations";
+import { Link } from "react-router-dom";
 
 const DateErrorMessage = () => {
   return (
@@ -37,6 +39,9 @@ const getTodayString = () => {
 
 const BookingForm = (props) => {
   const todayString = getTodayString();
+
+  const [showExistingReservations, setShowExistingReservations] =
+    useState(false);
 
   const [bookingDate, setBookingDate] = useState({
     value: todayString,
@@ -262,7 +267,23 @@ const BookingForm = (props) => {
             </tbody>
           </table>
         </form>
+        <Link
+          to="#"
+          aria-label="On Click"
+          type="button"
+          href="#"
+          onClick={() => setShowExistingReservations(!showExistingReservations)}
+          className="show-existing-reservations"
+        >
+          <div className="show-existing-reservations-heading">
+            {showExistingReservations ? "Hide" : "Show"} existing reservations
+            (for verification purposes only)
+          </div>
+        </Link>
       </div>
+      {showExistingReservations && (
+        <BookingExistingReservations bookings={props.bookings} />
+      )}
     </section>
   );
 };

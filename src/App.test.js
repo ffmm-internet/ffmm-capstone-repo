@@ -6,7 +6,12 @@ import { updateTimes, initializeTimes } from "./components/reducerMethods";
 
 describe("BookingForm", () => {
   test("Renders the BookingForm heading", () => {
-    render(<BookingForm />);
+    // MemoryRouter is needed for the <Link> to work
+    render(
+      <MemoryRouter>
+        <BookingForm />
+      </MemoryRouter>
+    );
     const headingElement = screen.getByText("Booking Details");
     expect(headingElement).toBeInTheDocument();
   });
@@ -21,12 +26,14 @@ describe("BookingForm", () => {
     jest.setSystemTime(new Date("2024-09-04T00:00:00"));
 
     render(
-      <BookingForm
-        submitForm={submitForm}
-        dispatch={dispatch}
-        availableTimes={["17:00", "18:00", "19:00"]}
-        navigateToConfirmationPage={navigateToConfirmationPage}
-      />
+      <MemoryRouter>
+        <BookingForm
+          submitForm={submitForm}
+          dispatch={dispatch}
+          availableTimes={["17:00", "18:00", "19:00"]}
+          navigateToConfirmationPage={navigateToConfirmationPage}
+        />
+      </MemoryRouter>
     );
 
     const dateInput = screen.getByLabelText(/Choose Date:/);
@@ -162,14 +169,20 @@ describe("submitForm", () => {
 });
 
 describe("html5 attribute validation", () => {
+  beforeEach(() => {
+    render(
+      <MemoryRouter>
+        <BookingForm />
+      </MemoryRouter>
+    );
+  });
+
   test("date input should be required", () => {
-    render(<BookingForm />);
     const dateInput = screen.getByLabelText(/Choose Date:/);
     expect(dateInput).toBeRequired();
   });
 
   test("date input should be in the future", () => {
-    render(<BookingForm />);
     const dateInput = screen.getByLabelText(/Choose Date:/);
     expect(dateInput).toHaveAttribute(
       "min",
@@ -178,26 +191,22 @@ describe("html5 attribute validation", () => {
   });
 
   test("time input should be required", () => {
-    render(<BookingForm />);
     const timeInput = screen.getByLabelText(/Choose Time:/);
     expect(timeInput).toBeRequired();
   });
 
   test("number of guests input should be required", () => {
-    render(<BookingForm />);
     const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
     expect(numberOfGuestsInput).toBeRequired();
   });
 
   test("number of guests input should be between 1 and 10", () => {
-    render(<BookingForm />);
     const numberOfGuestsInput = screen.getByLabelText(/Number of guests/);
     expect(numberOfGuestsInput).toHaveAttribute("min", "1");
     expect(numberOfGuestsInput).toHaveAttribute("max", "10");
   });
 
   test("occasion input should be optional", () => {
-    render(<BookingForm />);
     const occasionInput = screen.getByLabelText(/Occasion/);
     expect(occasionInput).not.toBeRequired();
   });
@@ -219,12 +228,14 @@ describe("javascript form validation", () => {
     jest.setSystemTime(new Date("2024-09-15T00:00:00"));
 
     render(
-      <BookingForm
-        availableTimes={availableTimes}
-        submitForm={submitForm}
-        dispatch={dispatch}
-        navigateToConfirmationPage={navigateToConfirmationPage}
-      />
+      <MemoryRouter>
+        <BookingForm
+          availableTimes={availableTimes}
+          submitForm={submitForm}
+          dispatch={dispatch}
+          navigateToConfirmationPage={navigateToConfirmationPage}
+        />
+      </MemoryRouter>
     );
   });
 

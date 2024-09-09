@@ -197,3 +197,18 @@ form {
     font-size: 36px;
   }
 }
+
+.show-existing-reservations {
+  grid-column: 1 / 10;
+}
+
+.show-existing-reservations-heading {
+  font-size: 11px;
+  padding-top: 20px;
+}
+
+@media (min-width: 440px) {
+  .show-existing-reservations-heading {
+    font-size: 16px;
+  }
+}
