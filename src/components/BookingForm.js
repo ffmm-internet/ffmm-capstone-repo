@@ -3,7 +3,11 @@ import { useState } from "react";
 import BookingSlot from "./BookingSlot";
 
 const DateErrorMessage = () => {
-  return <p className="field-error">Please select a valid date.</p>;
+  return (
+    <p className="field-error">
+      Please select a valid date (it must be today or in the future).
+    </p>
+  );
 };
 
 const TimeErrorMessage = (availableTimes) => {
@@ -19,7 +23,11 @@ const TimeErrorMessage = (availableTimes) => {
 };
 
 const NumberOfGuestsErrorMessage = () => {
-  return <p className="field-error">Please enter a valid number of guests.</p>;
+  return (
+    <p className="field-error">
+      Please enter a valid number of guests (it must be between 1 and 10).
+    </p>
+  );
 };
 
 const getTodayString = () => {
