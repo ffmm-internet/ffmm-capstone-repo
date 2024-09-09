@@ -171,7 +171,29 @@ form {
   }
 }
 
-.reserve-now-button:hover {
+.reserve-now-button:enabled:hover {
   cursor: pointer;
   background-color: #f1f0f0;
+}
+
+.reserve-now-button:disabled:hover {
+  cursor: normal;
+}
+
+.field-error {
+  color: red;
+  font-size: 11px;
+  padding-top: 5px;
+}
+
+@media (min-width: 440px) {
+  .field-error {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 992px) {
+  .field-error {
+    font-size: 36px;
+  }
 }

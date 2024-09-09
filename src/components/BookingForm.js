@@ -2,35 +2,87 @@ import "./BookingForm.css";
 import { useState } from "react";
 import BookingSlot from "./BookingSlot";
 
+const DateErrorMessage = () => {
+  return <p className="field-error">Please select a valid date.</p>;
+};
+
+const TimeErrorMessage = (availableTimes) => {
+  if (availableTimes && availableTimes.length > 0) {
+    return <p className="field-error">Please select a time.</p>;
+  } else {
+    return (
+      <p className="field-error">
+        No available times on this date. Please select another date.
+      </p>
+    );
+  }
+};
+
+const NumberOfGuestsErrorMessage = () => {
+  return <p className="field-error">Please enter a valid number of guests.</p>;
+};
+
 const getTodayString = () => {
   const [month, day, year] = new Date().toLocaleDateString("en-US").split("/");
   return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 };
 
 const BookingForm = (props) => {
-  const [bookingDate, setBookingDate] = useState(getTodayString());
-  const [bookingTime, setBookingTime] = useState("Select Time");
-  const [bookingNumberOfGuests, setBookingNumberOfGuests] = useState("1");
+  const todayString = getTodayString();
+
+  const [bookingDate, setBookingDate] = useState({
+    value: todayString,
+    isTouched: false,
+  });
+  const [bookingTime, setBookingTime] = useState({
+    value: "Select Time",
+    isTouched: false,
+  });
+  const [bookingNumberOfGuests, setBookingNumberOfGuests] = useState({
+    value: "1",
+    isTouched: false,
+  });
   const [bookingOccasion, setBookingOccasion] = useState("Other");
+
+  const isFormValid = () => {
+    const numGuests =
+      bookingNumberOfGuests && bookingNumberOfGuests.value
+        ? Number(bookingNumberOfGuests.value)
+        : 0;
+
+    return (
+      bookingDate &&
+      bookingDate.value &&
+      new Date(bookingDate.value + "T00:00:00").getDate() >=
+        new Date().getDate() &&
+      bookingTime &&
+      bookingTime.value &&
+      bookingTime.value !== "Select Time" &&
+      numGuests >= 1 &&
+      numGuests <= 10
+    );
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.submitForm({
-      bookingDate,
-      bookingTime,
-      bookingNumberOfGuests,
+      bookingDate: bookingDate.value,
+      bookingTime: bookingTime.value,
+      bookingNumberOfGuests: bookingNumberOfGuests.value,
       bookingOccasion,
     });
     clearForm();
   };
 
   const clearForm = () => {
-    const todayString = getTodayString();
     props.dispatch({ type: todayString });
 
-    setBookingDate(todayString);
-    setBookingTime("Select Time");
-    setBookingNumberOfGuests("1");
+    setBookingDate({ value: todayString, isTouched: false });
+    setBookingTime({
+      value: "Select Time",
+      isTouched: false,
+    });
+    setBookingNumberOfGuests({ value: "1", isTouched: false });
     setBookingOccasion("Other");
   };
 
@@ -73,13 +125,23 @@ const BookingForm = (props) => {
                     type="date"
                     id="booking-date"
                     className="booking-date-value"
-                    value={bookingDate}
-                    min={getTodayString()}
+                    value={bookingDate.value}
+                    min={todayString}
                     onChange={(e) => {
-                      setBookingDate(e.target.value);
+                      setBookingDate({
+                        ...bookingDate,
+                        value: e.target.value,
+                        isTouched: true,
+                      });
                       props.dispatch({ type: e.target.value });
                     }}
+                    required
                   />
+                  {bookingDate.isTouched &&
+                    (!bookingDate.value ||
+                      new Date(bookingDate.value + "T00:00:00").getDate() <
+                        new Date().getDate()) &&
+                    DateErrorMessage()}
                 </td>
               </tr>
               <tr>
@@ -96,8 +158,17 @@ const BookingForm = (props) => {
                   <select
                     id="booking-time"
                     className="booking-time-value"
-                    value={bookingTime}
-                    onChange={(e) => setBookingTime(e.target.value)}
+                    value={bookingTime.value}
+                    onChange={(e) => {
+                      setBookingTime({
+                        ...bookingTime,
+                        value: e.target.value,
+                      });
+                    }}
+                    onBlur={() =>
+                      setBookingTime({ ...bookingTime, isTouched: true })
+                    }
+                    required
                   >
                     <option value="Select Time">Select Time</option>
                     {!!props.availableTimes &&
@@ -105,6 +176,9 @@ const BookingForm = (props) => {
                         <BookingSlot key={time} time={time} />
                       ))}
                   </select>
+                  {bookingTime.isTouched &&
+                    bookingTime.value === "Select Time" &&
+                    TimeErrorMessage(props.availableTimes)}
                 </td>
               </tr>
               <tr>
@@ -125,9 +199,21 @@ const BookingForm = (props) => {
                     min="1"
                     max="10"
                     className="booking-number-of-guests-value"
-                    value={bookingNumberOfGuests}
-                    onChange={(e) => setBookingNumberOfGuests(e.target.value)}
+                    value={bookingNumberOfGuests.value}
+                    onChange={(e) =>
+                      setBookingNumberOfGuests({
+                        ...bookingNumberOfGuests,
+                        value: e.target.value,
+                        isTouched: true,
+                      })
+                    }
+                    required
                   />
+                  {bookingNumberOfGuests.isTouched &&
+                    (!bookingNumberOfGuests.value ||
+                      bookingNumberOfGuests.value < 1 ||
+                      bookingNumberOfGuests.value > 10) &&
+                    NumberOfGuestsErrorMessage(props.availableTimes)}
                 </td>
               </tr>
               <tr>
@@ -155,7 +241,11 @@ const BookingForm = (props) => {
               </tr>
               <tr>
                 <td colSpan="2">
-                  <button className="reserve-now-button" type="submit">
+                  <button
+                    className="reserve-now-button"
+                    type="submit"
+                    disabled={!isFormValid()}
+                  >
                     Reserve Now
                   </button>
                 </td>

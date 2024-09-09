@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Main from "./components/Main";
 import BookingForm from "./components/BookingForm";
-import { MemoryRouter, Route } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { updateTimes, initializeTimes } from "./components/reducerMethods";
 
 describe("BookingForm", () => {
@@ -15,6 +15,10 @@ describe("BookingForm", () => {
     const submitForm = jest.fn();
     const dispatch = jest.fn();
     const navigateToConfirmationPage = jest.fn();
+
+    // Set the date to 2024-09-04, i.e. as used in new Date()
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(new Date("2024-09-04T00:00:00"));
 
     render(
       <BookingForm
@@ -41,6 +45,8 @@ describe("BookingForm", () => {
     expect(dispatch).toHaveBeenCalledWith({
       type: "2024-09-04",
     });
+
+    jest.useRealTimers();
   });
 });
 
@@ -79,6 +85,10 @@ describe("submitForm", () => {
 
     spyLocalStorageSetItem = jest.spyOn(Storage.prototype, "setItem");
 
+    // Set the date to 2024-09-04, i.e. as used in new Date()
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(new Date("2024-09-04T00:00:00"));
+
     render(
       <MemoryRouter initialEntries={["/booking"]}>
         <Main></Main>
@@ -88,6 +98,7 @@ describe("submitForm", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+    jest.useRealTimers();
   });
 
   test("calls localStorage.getItem() with key 'bookings' when submitting the form", () => {
@@ -136,8 +147,8 @@ describe("submitForm", () => {
     const occasionInput = screen.getByLabelText(/Occasion/);
     const submitButton = screen.getByText(/Reserve Now/);
 
-    fireEvent.change(dateInput, { target: { value: "2024-09-03" } });
-    fireEvent.change(timeInput, { target: { value: "19:30" } }); // this time needs to be one that shows up in the availableTimes array
+    fireEvent.change(dateInput, { target: { value: "2024-09-05" } });
+    fireEvent.change(timeInput, { target: { value: "17:30" } }); // this time needs to be one that shows up in the availableTimes array
     fireEvent.change(numberOfGuestsInput, { target: { value: "3" } });
     fireEvent.change(occasionInput, { target: { value: "Anniversary" } });
     fireEvent.click(submitButton);
@@ -145,7 +156,7 @@ describe("submitForm", () => {
     expect(spyLocalStorageSetItem).toHaveBeenCalledWith(
       "bookings",
       '[{"bookingDate":"2024-09-04","bookingTime":"17:00","bookingNumberOfGuests":"2","bookingOccasion":"Birthday"},' +
-        '{"bookingDate":"2024-09-03","bookingTime":"19:30","bookingNumberOfGuests":"3","bookingOccasion":"Anniversary"}]'
+        '{"bookingDate":"2024-09-05","bookingTime":"17:30","bookingNumberOfGuests":"3","bookingOccasion":"Anniversary"}]'
     );
   });
 });

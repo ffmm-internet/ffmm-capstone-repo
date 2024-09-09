@@ -9,7 +9,7 @@ import { getTodayString } from "./BookingForm";
 const Main = () => {
   const [availableTimes, dispatch] = useReducer(
     updateTimes,
-    getTodayString(),
+    getTodayString(new Date()),
     initializeTimes
   );
 
